@@ -15,8 +15,8 @@ def index():
 
 @app.route('/stories')
 def story():
-    s = Story.query.all()
-    return jsonify([[s.to_dict() for s in story]])
+    story = Story.query.all()
+    return jsonify([s.to_dict() for s in story])
 
 @app.route('/stories/<int:id>')
 def single_story(id):
@@ -25,8 +25,8 @@ def single_story(id):
 
 @app.route('/chapter')
 def chapter():
-    c = Chapter.query.all()
-    return jsonify([[c.to_dict() for c in chapter]])
+    chapter = Chapter.query.all()
+    return jsonify([c.to_dict() for c in chapter])
 
 @app.route('/chapter/<int:id>')
 def single_chapter(id):
