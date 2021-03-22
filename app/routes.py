@@ -1,6 +1,6 @@
 from app import db, mail, Message
 from flask import current_app as app, render_template, request, flash, redirect, url_for, jsonify
-from app.models import User, Chapter, Story
+from app.models import User, Chapter, Story, Prompts
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 
@@ -12,6 +12,16 @@ def index():
         'story': Story.query.order_by(Story.date_created.desc()).all()
     }
     return render_template('index.html', **context)
+
+@app.route('/prompts')
+def prompt():
+    prompt = Prompts.query.all()
+    return jsonify([s.to_dict() for s in prompt])
+
+@app.route('/prompts/<int:id>')
+def single_prompt(id):
+    s = Prompts.query.get_or_404(id)
+    return jsonify(s.to_dict())
 
 @app.route('/stories')
 def story():
